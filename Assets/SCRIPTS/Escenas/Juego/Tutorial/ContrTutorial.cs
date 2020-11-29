@@ -10,14 +10,14 @@ public class ContrTutorial : MonoBehaviour
 	public bool Finalizado = false;
 	bool Iniciado = false;
 	
-	GameManager GM;
+	LevelManager LV;
 	
 	//------------------------------------------------------------------//
 
 	// Use this for initialization
 	void Start () 
 	{
-		GM = GameObject.Find("GameMgr").GetComponent<GameManager>();
+		LV = GameObject.Find("GameManager").GetComponent<LevelManager>();
 		
 		Pj.ContrTuto = this;
 	}
@@ -57,7 +57,7 @@ public class ContrTutorial : MonoBehaviour
 	public void Finalizar()
 	{
 		Finalizado = true;
-		GM.FinTutorial(Pj.IdPlayer);
+		LV.FinTutorial(Pj.IdPlayer);
 		Pj.GetComponent<Frenado>().Frenar();
 		Pj.GetComponent<Rigidbody>().velocity = Vector3.zero;
 		Pj.VaciarInv();

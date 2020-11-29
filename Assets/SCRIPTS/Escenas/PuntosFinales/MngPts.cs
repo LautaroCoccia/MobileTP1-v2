@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using UnityEngine.SceneManagement;
 public class MngPts : MonoBehaviour 
 {
 	Rect R = new Rect();
@@ -48,6 +48,7 @@ public class MngPts : MonoBehaviour
 		   Input.GetKeyDown(KeyCode.Return) ||
 		   Input.GetKeyDown(KeyCode.Mouse0))
 		{
+			SceneManager.LoadScene("Main_Menu");
 			Application.LoadLevel(0);
 		}
 		
@@ -55,7 +56,7 @@ public class MngPts : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Mouse1) ||
 		   Input.GetKeyDown(KeyCode.Keypad0))
 		{
-			Application.LoadLevel(Application.loadedLevel);
+
 		}
 		
 		//CIERRA LA APLICACION

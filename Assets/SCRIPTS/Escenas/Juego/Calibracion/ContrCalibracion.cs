@@ -28,7 +28,7 @@ public class ContrCalibracion : MonoBehaviour
 	public Pallet P;
     public ManejoPallets palletsMover;
 	
-	GameManager GM;
+	LevelManager LV;
 	
 	//----------------------------------------------------//
 	
@@ -42,7 +42,7 @@ public class ContrCalibracion : MonoBehaviour
         palletsMover.enabled = false;
         Pj.ContrCalib = this;
 		
-		GM = GameObject.Find("GameMgr").GetComponent<GameManager>();
+		LV = GameObject.Find("GameManager").GetComponent<LevelManager>();
 		
 		P.CintaReceptora = Llegada.gameObject;
 		Partida.Recibir(P);
@@ -145,7 +145,7 @@ public class ContrCalibracion : MonoBehaviour
 	{
 		EstAct = ContrCalibracion.Estados.Finalizado;
         palletsMover.enabled = false;
-        GM.FinCalibracion(Pj.IdPlayer);
+        LV.FinCalibracion(Pj.IdPlayer);
 	}
 	
 	void SetActivComp(bool estado)
