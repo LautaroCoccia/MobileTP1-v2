@@ -19,7 +19,8 @@ public class Player : MonoBehaviour
 	public ControladorDeDescarga ContrDesc;
 	public ContrCalibracion ContrCalib;
 	public ContrTutorial ContrTuto;
-	
+	public Rigidbody MyRigid;
+	public int speed;
 	Visualizacion MiVisualizacion;
 	
 	//------------------------------------------------------------------//
@@ -34,10 +35,7 @@ public class Player : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
 	
-	}
 	
 	//------------------------------------------------------------------//
 	
@@ -99,7 +97,6 @@ public class Player : MonoBehaviour
 		EstAct = Player.Estados.EnTutorial;
 		ContrTuto.Iniciar();
 	}
-	
 	public void CambiarAConduccion()
 	{
 		MiVisualizacion.CambiarAConduccion();

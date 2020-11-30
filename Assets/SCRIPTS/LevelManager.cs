@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
 	//public static Player[] Jugadoers;
@@ -17,7 +17,15 @@ public class LevelManager : MonoBehaviour
 	
 	public Player Player1;
 	public Player Player2;
-	
+	public Button Player1Up;
+	public Button Player1Left;
+	public Button Player1Down;
+	public Button Player1Right;
+
+	public Button Player2Up;
+	public Button Player2Left;
+	public Button Player2Down;
+	public Button Player2Right;
 	//mueve los esqueletos para usar siempre los mismos
 	public Transform Esqueleto1;
 	public Transform Esqueleto2;
@@ -87,12 +95,7 @@ public class LevelManager : MonoBehaviour
 	
 	void Update()
 	{
-		//REINICIAR
-		if(Input.GetKey(KeyCode.Mouse1) &&
-		   Input.GetKey(KeyCode.Keypad0))
-		{
-			Application.LoadLevel(Application.loadedLevel);
-		}
+		
 		
 		//CIERRA LA APLICACION
 		if(Input.GetKeyDown(KeyCode.Escape))
@@ -118,21 +121,36 @@ public class LevelManager : MonoBehaviour
 					FinTutorial(1);
 				}
 			}
+#if UNITY_EDITOR
+				if (PlayerInfo1.PJ == null && InputManager.Instance.GetAxis("Vertical") >0)
+				{
+					PlayerInfo1 = new PlayerInfo(0, Player1);
+					PlayerInfo1.LadoAct = Visualizacion.Lado.Izq;
+					SetPosicion(PlayerInfo1);
+				}
 
-                if (PlayerInfo1.PJ == null && Input.GetKeyDown(KeyCode.W)) {
-                    PlayerInfo1 = new PlayerInfo(0, Player1);
-                    PlayerInfo1.LadoAct = Visualizacion.Lado.Izq;
-                    SetPosicion(PlayerInfo1);
-                }
+				if (PlayerInfo2.PJ == null && InputManager.Instance.GetAxis("Vertical") > 0)
+				{
+					PlayerInfo2 = new PlayerInfo(1, Player2);
+					PlayerInfo2.LadoAct = Visualizacion.Lado.Der;
+					SetPosicion(PlayerInfo2);
+				}
+				//if (PlayerInfo1.PJ == null && Input.GetKeyDown(KeyCode.W)) {
+    //                PlayerInfo1 = new PlayerInfo(0, Player1);
+    //                PlayerInfo1.LadoAct = Visualizacion.Lado.Izq;
+    //                SetPosicion(PlayerInfo1);
+    //            }
 
-                if (PlayerInfo2.PJ == null && Input.GetKeyDown(KeyCode.UpArrow)) {
-                    PlayerInfo2 = new PlayerInfo(1, Player2);
-                    PlayerInfo2.LadoAct = Visualizacion.Lado.Der;
-                    SetPosicion(PlayerInfo2);
-                }
-			
-			//cuando los 2 pj terminaron los tutoriales empiesa la carrera
-			if(PlayerInfo1.PJ != null && PlayerInfo2.PJ != null)
+    //            if (PlayerInfo2.PJ == null && Input.GetKeyDown(KeyCode.UpArrow)) {
+    //                PlayerInfo2 = new PlayerInfo(1, Player2);
+    //                PlayerInfo2.LadoAct = Visualizacion.Lado.Der;
+    //                SetPosicion(PlayerInfo2);
+    //            }
+#elif UNITY_ANDROID
+		
+#endif
+				//cuando los 2 pj terminaron los tutoriales empiesa la carrera
+				if (PlayerInfo1.PJ != null && PlayerInfo2.PJ != null)
 			{
 				if(PlayerInfo1.FinTuto2 && PlayerInfo2.FinTuto2)
 				{
@@ -156,12 +174,6 @@ public class LevelManager : MonoBehaviour
 			{
 				FinalizarCarrera();
 			}
-			
-			/*
-			//para testing
-			TiempoTranscurrido += T.GetDT();
-			DistanciaRecorrida += (Player1.transform.position - PosCamionesCarrera[0]).magnitude;
-			*/
 			
 			if(ConteoRedresivo)
 			{
@@ -205,9 +217,9 @@ public class LevelManager : MonoBehaviour
 			
 			TiempEspMuestraPts -= Time.deltaTime;
 			if(TiempEspMuestraPts <= 0)
-				Application.LoadLevel(Application.loadedLevel +1);				
-			
-			break;		
+					Application.LoadLevel("PtsFinal");
+
+				break;		
 		}
 	}
 	
@@ -288,7 +300,7 @@ public class LevelManager : MonoBehaviour
 		Player1.GetComponent<Frenado>().Frenar();
 		Player1.CambiarATutorial();
 		Player1.gameObject.transform.position = PosCamion1Tuto;//posiciona el camion
-		Player1.transform.forward = Vector3.forward;
+		Player1.transform.forward = Vector3.forward *Player1.speed;
 			
 			
 		PlayerInfo2.FinCalibrado = true;
@@ -305,7 +317,7 @@ public class LevelManager : MonoBehaviour
 		Player2.GetComponent<Frenado>().Frenar();
 		Player2.gameObject.transform.position = PosCamion2Tuto;
 		Player2.CambiarATutorial();
-		Player2.transform.forward = Vector3 .forward;
+		Player2.transform.forward = Vector3.forward * Player2.speed;
 	}
 	
 	void EmpezarCarrera()
@@ -347,29 +359,12 @@ public class LevelManager : MonoBehaviour
 			DatosPartida.PtsGanador = Player2.Dinero;
 			DatosPartida.PtsPerdedor = Player1.Dinero;
 		}
-		
 		Player1.GetComponent<Frenado>().Frenar();
 		Player2.GetComponent<Frenado>().Frenar();
 		
 		Player1.ContrDesc.FinDelJuego();
 		Player2.ContrDesc.FinDelJuego();
 	}
-	
-	/*
-	public static ControladorDeDescarga GetContrDesc(int pjID)
-	{
-		switch (pjID)
-		{
-		case 1:
-			return ContrDesc1;
-			break;
-			
-		case 2:
-			return ContrDesc2;
-			break;
-		}
-		return null;
-	}*/
 	
 	//se encarga de posicionar la camara derecha para el jugador que esta a la derecha y viseversa
 	void SetPosicion(PlayerInfo pjInf)
@@ -408,14 +403,6 @@ public class LevelManager : MonoBehaviour
 		{
 			ObjsCarrera[i].SetActiveRecursively(true);
 		}
-		
-		/*
-		for(int i = 0; i < ObjsTuto1.Length; i++)
-		{
-			ObjsTuto1[i].SetActiveRecursively(false);
-			ObjsTuto2[i].SetActiveRecursively(false);
-		}
-		*/
 		
 		
 		//desactivacion de la calibracion
@@ -473,9 +460,9 @@ public class LevelManager : MonoBehaviour
 		Player1.GetComponent<ControlDireccion>().Habilitado = false;
 		Player2.GetComponent<ControlDireccion>().Habilitado = false;
 		//les de direccion
-		Player1.transform.forward = Vector3.forward;
-		Player2.transform.forward = Vector3.forward;
-		
+		Player1.transform.forward = Vector3.forward * Player1.speed;
+		Player2.transform.forward = Vector3.forward * Player2.speed;
+
 		EstAct = LevelManager.EstadoJuego.Jugando;
 	}
 	

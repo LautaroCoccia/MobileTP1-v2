@@ -46,37 +46,23 @@ public class MngPts : MonoBehaviour
 		//PARA JUGAR
 		if(Input.GetKeyDown(KeyCode.KeypadEnter) || 
 		   Input.GetKeyDown(KeyCode.Return) ||
-		   Input.GetKeyDown(KeyCode.Mouse0))
+		   Input.GetKeyDown(KeyCode.Mouse0) || TiempEspReiniciar <= 0)
 		{
-			SceneManager.LoadScene("Main_Menu");
-			Application.LoadLevel(0);
+			SceneManager.LoadScene("Credits");
 		}
 		
 		//REINICIAR
-		if(Input.GetKeyDown(KeyCode.Mouse1) ||
-		   Input.GetKeyDown(KeyCode.Keypad0))
-		{
-
-		}
+		
 		
 		//CIERRA LA APLICACION
-		if(Input.GetKeyDown(KeyCode.Escape))
-		{
-			Application.Quit();
-		}
+		
 		
 		//CALIBRACION DEL KINECT
-		if(Input.GetKeyDown(KeyCode.Backspace))
-		{
-			Application.LoadLevel(3);
-		}		
+		
 		
 		
 		TiempEspReiniciar -= Time.deltaTime;
-		if(TiempEspReiniciar <= 0 )
-		{
-			Application.LoadLevel(0);
-		}
+		
 		
 		
 		
