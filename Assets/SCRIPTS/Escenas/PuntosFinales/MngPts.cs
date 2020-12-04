@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using TMPro;
 public class MngPts : MonoBehaviour 
 {
 	Rect R = new Rect();
@@ -16,11 +17,15 @@ public class MngPts : MonoBehaviour
 	
 	public Vector2 GanadorPos;
 	public Vector2 GanadorEsc;
-	public Texture2D[] Ganadores;
+	public GameObject[] Ganadores;
 	public GUISkin GS_Ganador;
 	
 	public GameObject Fondo;
-	
+
+	public TextMeshProUGUI player1;
+	public TextMeshProUGUI player2;
+
+
 	public float TiempEspReiniciar = 10;
 	
 	
@@ -50,23 +55,20 @@ public class MngPts : MonoBehaviour
 		{
 			SceneManager.LoadScene("Credits");
 		}
-		
+
+		SetDinero();
 		//REINICIAR
-		
-		
+
+
 		//CIERRA LA APLICACION
-		
-		
+
+
 		//CALIBRACION DEL KINECT
-		
-		
-		
+
+
+
 		TiempEspReiniciar -= Time.deltaTime;
-		
-		
-		
-		
-		
+
 		if(ActivadoAnims)
 		{
 			TempoParpadeo += Time.deltaTime;
@@ -76,9 +78,22 @@ public class MngPts : MonoBehaviour
 				TempoParpadeo = 0;
 				
 				if(PrimerImaParp)
+                {
 					PrimerImaParp = false;
+					
+				}
 				else
 				{
+					if (DatosPartida.LadoGanadaor == DatosPartida.Lados.Izq)
+					{
+						player1.text = "";
+
+					}
+					else if (DatosPartida.LadoGanadaor == DatosPartida.Lados.Der)
+					{
+						player2.text = "";
+
+					}
 					TempoParpadeo += 0.1f;
 					PrimerImaParp = true;
 				}
@@ -113,7 +128,7 @@ public class MngPts : MonoBehaviour
 	{
 		if(ActivadoAnims)
 		{
-			SetDinero();
+			
 			SetCartelGanador();
 		}
 		
@@ -163,24 +178,22 @@ public class MngPts : MonoBehaviour
 		{
 		case DatosPartida.Lados.Der:
 			
-			GS_Ganador.box.normal.background = Ganadores[1];
+			Ganadores[1].SetActive(true);
+			Ganadores[0].SetActive(false);
 			
 			break;
 			
 		case DatosPartida.Lados.Izq:
-			
-			GS_Ganador.box.normal.background = Ganadores[0];
-			
-			break;
+
+				Ganadores[0].SetActive(true);
+				Ganadores[1].SetActive(false);
+
+				break;
 		}
 	}
 	
 	void SetDinero()
 	{
-		GUI.skin = GS_Dinero;
-		
-		R.width = DineroEsc.x * Screen.width/100;
-		R.height = DineroEsc.y * Screen.height/100;
 		
 		
 		
@@ -191,11 +204,11 @@ public class MngPts : MonoBehaviour
 		if(DatosPartida.LadoGanadaor == DatosPartida.Lados.Izq)//izquierda
 		{
 			if(!PrimerImaParp)//para que parpadee
-				GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsGanador));
+				player1.text="$" + Viz.PrepararNumeros(DatosPartida.PtsGanador);
 		}
 		else
 		{
-			GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsPerdedor));
+			player1.text="$" + Viz.PrepararNumeros(DatosPartida.PtsPerdedor);
 		}
 		
 		
@@ -207,26 +220,18 @@ public class MngPts : MonoBehaviour
 		if(DatosPartida.LadoGanadaor == DatosPartida.Lados.Der)//derecha
 		{
 			if(!PrimerImaParp)//para que parpadee
-				GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsGanador));
+				player2.text="$" + Viz.PrepararNumeros(DatosPartida.PtsGanador);
 		}
 		else
 		{
-			GUI.Box(R, "$" + Viz.PrepararNumeros(DatosPartida.PtsPerdedor));
+			player2.text="$" + Viz.PrepararNumeros(DatosPartida.PtsPerdedor);
 		}
 		
 	}
 	
 	void SetCartelGanador()
 	{
-		GUI.skin = GS_Ganador;
-		
-		R.width = GanadorEsc.x * Screen.width/100;
-		R.height = GanadorEsc.y * Screen.height/100;
-		R.x = GanadorPos.x * Screen.width/100;
-		R.y = GanadorPos.y * Screen.height/100;
-		
-		//if(PrimerImaParp)//para que parpadee
-			GUI.Box(R, "");
+
 	}
 	
 	public void DesaparecerGUI()

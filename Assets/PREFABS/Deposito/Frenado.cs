@@ -27,10 +27,7 @@ public class Frenado : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
 	
-	}
 	
 	void FixedUpdate ()
 	{
@@ -73,9 +70,11 @@ public class Frenado : MonoBehaviour
 	{
 		//Debug.Log(gameObject.name + "frena");
 		GetComponent<ControlDireccion>().enabled = false;
-		player.transform.forward = Vector3.forward * 0;
+		gameObject.SendMessage("SetAcel", 0f);
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
+
 		Frenando = true;
-		
+
 		//gameObject.SendMessage("SetDragZ", 25f);
 		Tempo = 0;
 		Contador = 0;
@@ -85,7 +84,7 @@ public class Frenado : MonoBehaviour
 	{
 		//Debug.Log(gameObject.name + "restaura la velociad");
 		GetComponent<ControlDireccion>().enabled = true;
-		player.transform.forward = Vector3.forward * player.speed;
+		gameObject.SendMessage("SetAcel", 1f);
 		Frenando = false;
 		Tempo = 0;
 		Contador = 0;

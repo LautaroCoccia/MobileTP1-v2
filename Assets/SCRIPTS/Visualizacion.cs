@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using TMPro;
 /// <summary>
 /// clase encargada de TODA la visualizacion
 /// de cada player, todo aquello que corresconda a 
@@ -24,13 +24,12 @@ public class Visualizacion : MonoBehaviour
 	public Vector2[]DinPos;
 	public Vector2 DinEsc = Vector2.zero;
 	
-	public GUISkin GS_Din;
+	public TextMeshProUGUI GS_Din;
 	
 	//EL VOLANTE
 	public Vector2[] VolantePos;
 	public float VolanteEsc = 0;
 	
-	public GUISkin GS_Volante;
 	
 	
 	//PARA EL INVENTARIO
@@ -51,8 +50,8 @@ public class Visualizacion : MonoBehaviour
 	public float TempParp = 0;
 	public bool PrimIma = true;
 	
-	public Texture2D[] TextInvIzq;
-	public Texture2D[] TextInvDer;
+	public GameObject[] TextInvIzq;
+	public GameObject[] TextInvDer;
 	
 	public GUISkin GS_Inv;
 	
@@ -88,9 +87,6 @@ public class Visualizacion : MonoBehaviour
 	public Texture2D TextNum2;
 	public GameObject Techo;
 	
-	
-	
-	
 	Rect R;
 	
 	//------------------------------------------------------------------//
@@ -104,12 +100,9 @@ public class Visualizacion : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () 
-	{
-		
-	}
 	
-	void OnGUI()
+	
+	void Update()
 	{	
 		switch(Pj.EstAct)
 		{
@@ -121,7 +114,6 @@ public class Visualizacion : MonoBehaviour
 			//contador de dinero
 			SetDinero();
 			//el volante
-			SetVolante();
 			break;
 			
 			
@@ -144,7 +136,6 @@ public class Visualizacion : MonoBehaviour
 		case Player.Estados.EnTutorial:
 			SetInv3();
 			SetTuto();
-			SetVolante();
 			break;
 		}
 		
@@ -261,7 +252,7 @@ public class Visualizacion : MonoBehaviour
 	
 	void SetDinero()
 	{
-		GUI.skin = GS_Din;
+		//GUI.skin = GS_Din;
 		
 		R.width = DinEsc.x *Screen.width /100;
 		R.height = DinEsc.y *Screen.height /100;
@@ -385,60 +376,9 @@ public class Visualizacion : MonoBehaviour
 	}
 	*/
 	
-	void SetVolante()
-	{
-		GUI.skin = GS_Volante;
-		
-		R.width = VolanteEsc * Screen.width /100;
-		R.height = VolanteEsc * Screen.width /100;
-		R.x = VolantePos[0].x *Screen.width /100;
-		R.y = VolantePos[0].y *Screen.height /100;
-		
-		if(LadoAct == Visualizacion.Lado.Der)
-			R.x = VolantePos[1].x *Screen.width /100;
-			//R.x = (Screen.width) - ((Screen.width/2) - R.x);
-		
-		Vector2 centro;
-		centro.x = R.x + R.width/2;
-		centro.y = R.y + R.height/2;
-		float angulo = 100 * Direccion.GetGiro();
-		
-		GUIUtility.RotateAroundPivot(angulo, centro);
-				
-		GUI.Box(R,"");
-		
-		GUIUtility.RotateAroundPivot(angulo*(-1), centro);
-	}
 	
-	void SetInv2()
-	{
-		GUI.skin = GS_Inv;
-		
-		R.width = FondoEsc.x * Screen.width /100;
-		R.height = FondoEsc.y * Screen.width /100;
-		R.x = FondoPos[0].x * Screen.width /100;
-		R.y = FondoPos[0].y * Screen.height /100;
-		
-		int contador = 0;
-		for(int i = 0; i < 3; i++)
-		{
-			if(Pj.Bolasas[i]!=null)
-				contador++;
-		}
-		
-		if(LadoAct == Visualizacion.Lado.Der)
-		{
-			//R.x = (Screen.width) - R.x - R.width;
-			R.x = FondoPos[1].x * Screen.width /100;
-			GS_Inv.box.normal.background = TextInvDer[contador];
-		}
-		else
-		{
-			GS_Inv.box.normal.background = TextInvIzq[contador];
-		}
-		
-		GUI.Box(R,"");
-	}
+	
+	
 	
 	void SetInv3()
 	{
@@ -461,8 +401,29 @@ public class Visualizacion : MonoBehaviour
 			//R.x = (Screen.width) - (Screen.width/2) - R.x;
 			R.x = FondoPos[1].x * Screen.width /100;
 			
-			if(contador < 3)
-				GS_Inv.box.normal.background = TextInvDer[contador];
+			if(contador == 0)
+            {
+				
+				TextInvDer[0].SetActive(true);
+				TextInvDer[1].SetActive(false);
+				TextInvDer[2].SetActive(false);
+				TextInvDer[3].SetActive(false);
+				TextInvDer[4].SetActive(false);
+			}
+			else if(contador < 3)
+			{
+
+				TextInvDer[contador].SetActive(true);
+				for (int i = 0; i < contador; i++)
+				{
+					if (contador != i)
+					{
+						TextInvDer[i].SetActive(false);
+					}
+				}
+			}
+
+				
 			else
 			{
 				TempParp += T.GetDT();
@@ -478,19 +439,46 @@ public class Visualizacion : MonoBehaviour
 				
 				if(PrimIma)
 				{
-					GS_Inv.box.normal.background = TextInvDer[3];
+					TextInvDer[3].SetActive(true);
+					TextInvDer[0].SetActive(false);
+					TextInvDer[1].SetActive(false);
+					TextInvDer[2].SetActive(false);
+					TextInvDer[4].SetActive(false);
 				}
 				else
 				{
-					GS_Inv.box.normal.background = TextInvDer[4];
+					TextInvDer[4].SetActive(true);
+					TextInvDer[0].SetActive(false);
+					TextInvDer[1].SetActive(false);
+					TextInvDer[2].SetActive(false);
+					TextInvDer[3].SetActive(false);
 				}
 				
 			}
 		}
 		else
 		{
-			if(contador < 3)
-				GS_Inv.box.normal.background = TextInvIzq[contador];
+			if (contador == 0)
+			{
+
+				TextInvIzq[0].SetActive(true);
+				TextInvIzq[1].SetActive(false);
+				TextInvIzq[2].SetActive(false);
+				TextInvIzq[3].SetActive(false);
+				TextInvIzq[4].SetActive(false);
+			}
+			else if (contador < 3)
+            {
+				TextInvIzq[contador].SetActive(true);
+				for(int i = 0; i < contador; i++)
+                {
+					if(contador!=i)
+                    {
+						TextInvIzq[i].SetActive(false);
+					}
+                }
+			}
+				//GS_Inv.box.normal.background = TextInvIzq[contador];
 			else
 			{
 				TempParp += T.GetDT();
@@ -506,16 +494,23 @@ public class Visualizacion : MonoBehaviour
 				
 				if(PrimIma)
 				{
-					GS_Inv.box.normal.background = TextInvIzq[3];
+					TextInvIzq[3].SetActive(true);
+					TextInvIzq[0].SetActive(false);
+					TextInvIzq[1].SetActive(false);
+					TextInvIzq[2].SetActive(false);
+					TextInvIzq[4].SetActive(false);
 				}
 				else
 				{
-					GS_Inv.box.normal.background = TextInvIzq[4];
+					TextInvIzq[4].SetActive(true);
+					TextInvIzq[0].SetActive(false);
+					TextInvIzq[1].SetActive(false);
+					TextInvIzq[2].SetActive(false);
+					TextInvIzq[3].SetActive(false);
+					//GS_Inv.box.normal.background = TextInvIzq[4];
 				}
 			}
 		}
-		
-		GUI.Box(R,"");
 	}
 	
 	public string PrepararNumeros(int dinero)

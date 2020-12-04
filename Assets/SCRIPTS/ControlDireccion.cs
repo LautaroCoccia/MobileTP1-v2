@@ -1,116 +1,141 @@
 using UnityEngine;
 using System.Collections;
-
-public class ControlDireccion : MonoBehaviour 
+//ACA NO ESTA EL ERROR
+public class ControlDireccion : MonoBehaviour
 {
-	const int MyGiro = 50;
+	public enum TipoInput { Mouse, Kinect, AWSD, Arrows, VirtualJoystic }
+	public TipoInput InputAct = ControlDireccion.TipoInput.Mouse;
+
 	public Transform ManoDer;
 	public Transform ManoIzq;
-	
+
 	public float MaxAng = 90;
 	public float DesSencibilidad = 90;
-	
+
+	public bool irDerecha = false;
+	public bool irIzquierda = false;
+
 	float Giro = 0;
-	
-	public enum Sentido {Der, Izq}
+
+	public enum Sentido { Der, Izq }
 	Sentido DirAct;
-	
+
 	public bool Habilitado = true;
 	//float Diferencia;
-		
+
 	//---------------------------------------------------------//
-	
+
 	// Use this for initialization
-	void Start () 
+	void Start()
 	{
-	
+
 	}
-	
+
 	// Update is called once per frame
-	void Update () 
+	void Update()
 	{
+		switch (InputAct)
+		{
+			case TipoInput.Mouse:
+				if (Habilitado)
+					gameObject.SendMessage("SetGiro", MousePos.Relation(MousePos.AxisRelation.Horizontal));//debe ser reemplanado
+				break;
 
-            //switch(InputAct)
-            //{
-            //case TipoInput.Mouse:
-            //	if(Habilitado) 
-            //		gameObject.SendMessage("SetGiro", MousePos.Relation(MousePos.AxisRelation.Horizontal));//debe ser reemplanado
-            //	break;
+			case TipoInput.Kinect:
 
-            //case TipoInput.Kinect:
+				//print("Angulo: "+Angulo());
+				/*
+				if(ManoIzq.position.y > ManoDer.position.y)
+				{
+					DirAct = Sentido.Der;
+					Diferencia = ManoIzq.position.y - ManoDer.position.y;
+				}
+				else
+				{
+					DirAct = Sentido.Izq;
+					Diferencia = ManoDer.position.y - ManoIzq.position.y;
+				}
+				*/
 
-            //	//print("Angulo: "+Angulo());
-            //	/*
-            //	if(ManoIzq.position.y > ManoDer.position.y)
-            //	{
-            //		DirAct = Sentido.Der;
-            //		Diferencia = ManoIzq.position.y - ManoDer.position.y;
-            //	}
-            //	else
-            //	{
-            //		DirAct = Sentido.Izq;
-            //		Diferencia = ManoDer.position.y - ManoIzq.position.y;
-            //	}
-            //	*/
+				if (ManoIzq.position.y > ManoDer.position.y)
+				{
+					DirAct = Sentido.Der;
+				}
+				else
+				{
+					DirAct = Sentido.Izq;
+				}
 
-            //	if(ManoIzq.position.y > ManoDer.position.y)
-            //	{
-            //		DirAct = Sentido.Der;
-            //	}
-            //	else
-            //	{
-            //		DirAct = Sentido.Izq;
-            //	}
+				switch (DirAct)
+				{
+					case Sentido.Der:
+						if (Angulo() <= MaxAng)
+							Giro = Angulo() / (MaxAng + DesSencibilidad);
+						else
+							Giro = 1;
 
-            //	switch(DirAct)
-            //	{
-            //	case Sentido.Der:
-            //		if(Angulo() <= MaxAng)
-            //			Giro = Angulo() / (MaxAng + DesSencibilidad);
-            //		else
-            //			Giro = 1;
+						if (Habilitado)
+							gameObject.SendMessage("SetGiro", Giro);//debe ser reemplanado
 
-            //		if(Habilitado)
-            //			gameObject.SendMessage("SetGiro", Giro);//debe ser reemplanado
+						break;
 
-            //		break;
+					case Sentido.Izq:
+						if (Angulo() <= MaxAng)
+							Giro = (Angulo() / (MaxAng + DesSencibilidad)) * (-1);
+						else
+							Giro = (-1);
 
-            //	case Sentido.Izq:
-            //		if(Angulo() <= MaxAng)
-            //			Giro = (Angulo() / (MaxAng + DesSencibilidad)) * (-1);
-            //		else
-            //			Giro = (-1);
+						if (Habilitado)
+							gameObject.SendMessage("SetGiro", Giro);//debe ser reemplanado
 
-            //		if(Habilitado)
-            //			gameObject.SendMessage("SetGiro", Giro);//debe ser reemplanado
+						break;
+				}
+				break;
+			case TipoInput.AWSD:
+				if (Habilitado)
+				{
+					if (Input.GetKey(KeyCode.A))
+					{
+						gameObject.SendMessage("SetGiro", -1);
+					}
+					if (Input.GetKey(KeyCode.D))
+					{
+						gameObject.SendMessage("SetGiro", 1);
+					}
+				}
+				break;
+			case TipoInput.Arrows:
+				if (Habilitado)
+				{
+					if (Input.GetKey(KeyCode.LeftArrow))
+					{
+						gameObject.SendMessage("SetGiro", -1);
+					}
+					if (Input.GetKey(KeyCode.RightArrow))
+					{
+						gameObject.SendMessage("SetGiro", 1);
+					}
+				}
+				break;
+			case TipoInput.VirtualJoystic:
+				if(Habilitado)
+                {
+					if(irIzquierda)
+                    {
+						gameObject.SendMessage("SetGiro", -1);
+						irIzquierda = false;
+					}
+					if (irDerecha)
+					{
+						gameObject.SendMessage("SetGiro", 1);
+						irDerecha = false;
+					}
+				}
+				break;
+		}
+	}
 
-            //		break;
-            //	}
-            //	break;
-            //          case TipoInput.AWSD:
-            //              if (Habilitado) {
-            //                  if (Input.GetKey(KeyCode.A)) {
-            //                      gameObject.SendMessage("SetGiro", -1);
-            //                  }
-            //                  if (Input.GetKey(KeyCode.D)) {
-            //                      gameObject.SendMessage("SetGiro", 1);
-            //                  }
-            //              }
-            //              break;
-            //          case TipoInput.Arrows:
-            //              if (Habilitado) {
-            //                  if (Input.GetKey(KeyCode.LeftArrow)) {
-            //                      gameObject.SendMessage("SetGiro", -1);
-            //                  }
-            //                  if (Input.GetKey(KeyCode.RightArrow)) {
-            //                      gameObject.SendMessage("SetGiro", 1);
-            //                  }
-            //              }
-            //              break;
-            //      }		
-        }
-
-		public float GetGiro()
+	public float GetGiro()
 	{
 		/*
 		switch(DirAct)
@@ -130,16 +155,36 @@ public class ControlDireccion : MonoBehaviour
 				break;
 			}
 		*/
-		
+
 		return Giro;
 	}
-	
+
 	float Angulo()
 	{
 		Vector2 diferencia = new Vector2(ManoDer.localPosition.x, ManoDer.localPosition.y)
 						   - new Vector2(ManoIzq.localPosition.x, ManoIzq.localPosition.y);
-		
-		return Vector2.Angle(diferencia,new Vector2(1,0));
+
+		return Vector2.Angle(diferencia, new Vector2(1, 0));
 	}
-	
+
+	public void OnAButton ()
+    {
+		irIzquierda=true;
+	}
+	public void OnDButton()
+    {
+		irDerecha = true;
+
+	}
+
+	public void OnLeftButton()
+	{
+
+		irIzquierda = true;
+	}
+	public void OnRightButton()
+	{
+		irDerecha = true;
+
+	}
 }

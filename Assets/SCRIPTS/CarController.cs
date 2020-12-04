@@ -9,7 +9,7 @@ public class CarController : MonoBehaviour {
     public float throttleCoefficient = 20000f;
     public float maxTurn = 20f;
     float giro = 0f;
-    float acel = 1000f;
+    float acel = 10000f;
 
     // Use this for initialization
     void Start () {
