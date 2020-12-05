@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.Collections;
-//ACA NO ESTA EL ERROR
-public class ControlDireccion : MonoBehaviour
+using UnityEngine.EventSystems;
+public class ControlDireccion : MonoBehaviour 
 {
 	public enum TipoInput { Mouse, Kinect, AWSD, Arrows, VirtualJoystic }
 	public TipoInput InputAct = ControlDireccion.TipoInput.Mouse;
 
 	public Transform ManoDer;
 	public Transform ManoIzq;
+
+	public Joystick Joy;
 
 	public float MaxAng = 90;
 	public float DesSencibilidad = 90;
@@ -120,16 +122,7 @@ public class ControlDireccion : MonoBehaviour
 			case TipoInput.VirtualJoystic:
 				if(Habilitado)
                 {
-					if(irIzquierda)
-                    {
-						gameObject.SendMessage("SetGiro", -1);
-						irIzquierda = false;
-					}
-					if (irDerecha)
-					{
-						gameObject.SendMessage("SetGiro", 1);
-						irDerecha = false;
-					}
+					gameObject.SendMessage("SetGiro", Joy.Horizontal);
 				}
 				break;
 		}
@@ -167,24 +160,5 @@ public class ControlDireccion : MonoBehaviour
 		return Vector2.Angle(diferencia, new Vector2(1, 0));
 	}
 
-	public void OnAButton ()
-    {
-		irIzquierda=true;
-	}
-	public void OnDButton()
-    {
-		irDerecha = true;
-
-	}
-
-	public void OnLeftButton()
-	{
-
-		irIzquierda = true;
-	}
-	public void OnRightButton()
-	{
-		irDerecha = true;
-
-	}
+	
 }

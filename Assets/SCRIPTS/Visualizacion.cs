@@ -14,6 +14,9 @@ public class Visualizacion : MonoBehaviour
 	ControlDireccion Direccion;
 	Player Pj;
 	
+	public enum Mode{single, multi }
+	public Mode gameMode;
+
 	//las distintas camaras
 	public Camera CamCalibracion;
 	public Camera CamConduccion;
@@ -149,6 +152,16 @@ public class Visualizacion : MonoBehaviour
 		CamCalibracion.enabled = true;
 		CamConduccion.enabled = false;
 		CamDescarga.enabled = false;
+
+		switch(gameMode)
+        {
+			case Mode.single:
+				CamCalibracion.enabled = false;
+				break;
+			case Mode.multi:
+				CamCalibracion.enabled = true;
+				break;
+        }
 	}
 	
 	public void CambiarATutorial()

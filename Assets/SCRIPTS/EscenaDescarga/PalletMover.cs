@@ -7,8 +7,16 @@ public class PalletMover : ManejoPallets {
     public MoveType miInput;
     public enum MoveType {
         WASD,
-        Arrows
+        Arrows,
+        Joystick
     }
+
+    public GameObject paso1;
+    bool agarrar = false;
+    public GameObject paso2;
+    bool levantar = false;
+    public GameObject paso3;
+    bool dejar = false;
 
     public ManejoPallets Desde, Hasta;
     bool segundoCompleto = false;
@@ -37,11 +45,40 @@ public class PalletMover : ManejoPallets {
                     TercerPaso();
                 }
                 break;
+            case MoveType.Joystick:
+                if (!Tenencia() && Desde.Tenencia() && agarrar)
+                {
+                    PrimerPaso();
+                    Debug.Log("Primer Paso");
+                    agarrar = false;
+                }
+                if (Tenencia() && levantar)
+                {
+                    SegundoPaso();
+                    levantar = false;
+                }
+                if (segundoCompleto && Tenencia() && dejar)
+                {
+                    TercerPaso();
+                    dejar = false;
+                }
+                break;
             default:
                 break;
         }
     }
-
+    public void LeftButton() 
+    {
+        agarrar = true; 
+    }
+    public void MidButton()
+    { 
+        levantar = true; 
+    }
+    public void RightButton() 
+    {
+        dejar = true;
+    }
     void PrimerPaso() {
         Desde.Dar(this);
         segundoCompleto = false;

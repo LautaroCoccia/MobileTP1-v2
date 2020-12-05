@@ -4,7 +4,7 @@
 //using UnityEngine.UI;
 //using UnityEngine.EventSystems;
 
-//public class VirtualJoystick : MonoBehaviour,IDragHandler, IPointerUpHandler,IPointerDownHandler
+//public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 //{
 //    [SerializeField] RectTransform stick = null;
 //    [SerializeField] Image background = null;
@@ -18,7 +18,7 @@
 //    public void OnDrag(PointerEventData eventData)
 //    {
 //        Vector2 pos = ConvertTOLocal(eventData);
-//        if(pos.magnitude > limit)
+//        if (pos.magnitude > limit)
 //        {
 //            pos = pos.normalized * limit;
 //        }
@@ -52,8 +52,8 @@
 //                eventData.enterEventCamera,
 //                out newPos);
 //        return newPos;
-        
-    
+
+
 //    }
-    
+
 //}
