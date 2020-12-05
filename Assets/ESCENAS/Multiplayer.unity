@@ -114354,7 +114354,7 @@ PrefabInstance:
     - target: {fileID: 114475702172432364, guid: b81b1a58a0f14c9439cbdd014e695f71,
         type: 3}
       propertyPath: InputAct
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114475702172432364, guid: b81b1a58a0f14c9439cbdd014e695f71,
         type: 3}
@@ -115041,7 +115041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  miInput: 1
+  miInput: 2
   paso1: {fileID: 521375668}
   paso2: {fileID: 238562308}
   paso3: {fileID: 877867206}
@@ -115134,7 +115134,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &447424464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -115654,7 +115654,7 @@ PrefabInstance:
     - target: {fileID: 114475702172432364, guid: b81b1a58a0f14c9439cbdd014e695f71,
         type: 3}
       propertyPath: InputAct
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114475702172432364, guid: b81b1a58a0f14c9439cbdd014e695f71,
         type: 3}
@@ -116191,7 +116191,7 @@ PrefabInstance:
     - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
@@ -116539,7 +116539,7 @@ PrefabInstance:
     - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
@@ -116913,7 +116913,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  miInput: 0
+  miInput: 2
   paso1: {fileID: 592113582}
   paso2: {fileID: 1720193562}
   paso3: {fileID: 1041567071}
@@ -117243,7 +117243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1315623493
 RectTransform:
   m_ObjectHideFlags: 0
@@ -117316,7 +117316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  miInput: 0
+  miInput: 2
   paso1: {fileID: 592113582}
   paso2: {fileID: 1720193562}
   paso3: {fileID: 1041567071}
@@ -117593,7 +117593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Controlador: {fileID: 0}
-  miInput: 1
+  miInput: 2
   paso1: {fileID: 521375668}
   paso2: {fileID: 238562308}
   paso3: {fileID: 877867206}
