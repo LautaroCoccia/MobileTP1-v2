@@ -142,26 +142,26 @@ public class Visualizacion : MonoBehaviour
 			break;
 		}
 		
-		GUI.skin = null;
+
 	}
 	
 	//--------------------------------------------------------//
 	
 	public void CambiarACalibracion()
 	{
-		CamCalibracion.enabled = true;
-		CamConduccion.enabled = false;
-		CamDescarga.enabled = false;
-
-		switch(gameMode)
-        {
+		switch (gameMode)
+		{
 			case Mode.single:
 				CamCalibracion.enabled = false;
 				break;
 			case Mode.multi:
 				CamCalibracion.enabled = true;
 				break;
-        }
+		}
+		CamConduccion.enabled = false;
+		CamDescarga.enabled = false;
+
+		
 	}
 	
 	public void CambiarATutorial()
@@ -395,7 +395,7 @@ public class Visualizacion : MonoBehaviour
 	
 	void SetInv3()
 	{
-		GUI.skin = GS_Inv;
+
 		
 		R.width = FondoEsc.x * Screen.width /100;
 		R.height = FondoEsc.y * Screen.width /100;

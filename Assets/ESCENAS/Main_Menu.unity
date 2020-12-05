@@ -277,6 +277,17 @@ MonoBehaviour:
           m_StringArgument: Singleplayer
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 409145051}
+        m_MethodName: OnWithObs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &42272342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,66 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb9a7c4be31b56c448c20479651c09bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &409145052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409145050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c8ccfbee54199948923d8705f53aea9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TiempoDeJuego: 60
-  EstAct: 0
   OBS: 0
-  obstaculos: {fileID: 0}
-  PlayerInfo1:
-    FinCalibrado: 0
-    FinTuto1: 0
-    FinTuto2: 0
-    LadoAct: 0
-    TipoDeInput: 0
-    PJ: {fileID: 0}
-  PlayerInfo2:
-    FinCalibrado: 0
-    FinTuto1: 0
-    FinTuto2: 0
-    LadoAct: 0
-    TipoDeInput: 0
-    PJ: {fileID: 0}
-  Player1: {fileID: 0}
-  Player2: {fileID: 0}
-  Esqueleto1: {fileID: 0}
-  Esqueleto2: {fileID: 0}
-  PosEsqsCarrera: []
-  ConteoPosEsc:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  ConteoParaInicion: 3
-  TiempoGUI:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  GS_TiempoGUI: {fileID: 0}
-  TiempEspMuestraPts: 3
-  PosCamionesCarrera:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  PosCamion1Tuto: {x: 0, y: 0, z: 0}
-  PosCamion2Tuto: {x: 0, y: 0, z: 0}
-  ObjsCalibracion1: []
-  ObjsCalibracion2: []
-  ObjsTuto1: []
-  ObjsTuto2: []
-  ObjsCarrera: []
 --- !u!1 &453827832
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,12 +2075,12 @@ MonoBehaviour:
           m_StringArgument: Singleplayer
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 409145050}
-        m_MethodName: 
+      - m_Target: {fileID: 409145051}
+        m_MethodName: WithOutObs
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

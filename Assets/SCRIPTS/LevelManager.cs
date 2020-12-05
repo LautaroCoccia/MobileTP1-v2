@@ -12,9 +12,7 @@ public class LevelManager : MonoBehaviour
 
 	public enum EstadoJuego { Calibrando, Jugando, Finalizado }
 	public EstadoJuego EstAct = EstadoJuego.Calibrando;
-	public enum Obstaculos { desactivados, activados}
-
-	public Obstaculos OBS = Obstaculos.desactivados;
+	
 	public GameObject obstaculos;
 	public PlayerInfo PlayerInfo1 = null;
 	public PlayerInfo PlayerInfo2 = null;
@@ -75,15 +73,6 @@ public class LevelManager : MonoBehaviour
 
 	void Start()
 	{
-		switch(OBS)
-        {
-			case Obstaculos.desactivados:
-				obstaculos.SetActive(false);
-				break;
-			case Obstaculos.activados:
-				obstaculos.SetActive(true);
-				break;
-		}
 		IniciarCalibracion();
 	}
 

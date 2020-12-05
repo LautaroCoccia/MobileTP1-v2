@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager _instanceGameManager;
+    public enum Obstaculos { desactivados, activados }
 
+    public Obstaculos OBS = Obstaculos.desactivados;
+
+    public static GameManager _instanceGameManager;
     private void Awake()
     {
         if (_instanceGameManager == null)
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
 
         Application.Quit();
     }
+   
 }
 
 

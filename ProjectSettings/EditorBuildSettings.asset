@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/ESCENAS/Main_Menu.unity
     guid: c6e31f9723c0895429a2220fc6e05c92
   - enabled: 1
+    path: Assets/ESCENAS/Singleplayer.unity
+    guid: d2e7682c72368dd4b9d30983d77d0c25
+  - enabled: 1
     path: Assets/ESCENAS/Multiplayer.unity
     guid: 6a990c81459e9b04c87adbbd2d639bbd
   - enabled: 1
