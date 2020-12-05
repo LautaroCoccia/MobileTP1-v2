@@ -42,7 +42,15 @@ public class GameManager : MonoBehaviour
 
         Application.Quit();
     }
-   
+    public void OnWhithObs()
+    {
+        OBS = Obstaculos.activados;
+    }
+
+    public void WithOutObs()
+    {
+        OBS = Obstaculos.desactivados;
+    }
 }
 
 

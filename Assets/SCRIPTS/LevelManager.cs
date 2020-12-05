@@ -121,14 +121,14 @@ public class LevelManager : MonoBehaviour
 						break;
                 }
 
-				if (PlayerInfo1.PJ == null && Input.GetKeyDown(KeyCode.W))
+				if (PlayerInfo1.PJ == null )
 				{
 					PlayerInfo1 = new PlayerInfo(0, Player1);
 					PlayerInfo1.LadoAct = Visualizacion.Lado.Izq;
 					SetPosicion(PlayerInfo1);
 				}
 
-				if (PlayerInfo2.PJ == null && Input.GetKeyDown(KeyCode.UpArrow))
+				if (PlayerInfo2.PJ == null )
 				{
 					PlayerInfo2 = new PlayerInfo(1, Player2);
 					PlayerInfo2.LadoAct = Visualizacion.Lado.Der;
@@ -292,6 +292,8 @@ public class LevelManager : MonoBehaviour
 
 	void EmpezarCarrera()
 	{
+		
+
 		Player1.GetComponent<Frenado>().RestaurarVel();
 		Player1.GetComponent<ControlDireccion>().Habilitado = true;
 
@@ -375,8 +377,15 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < ObjsCarrera.Length; i++)
 		{
 			ObjsCarrera[i].SetActiveRecursively(true);
-		}
+			if (GameManager._instanceGameManager != null && GameManager._instanceGameManager.OBS == GameManager.Obstaculos.activados)
+			{
+				ObjsCarrera[0].SetActiveRecursively(true);
 
+			}
+			else
+				ObjsCarrera[0].SetActiveRecursively(false);
+		}
+		
 
 
 

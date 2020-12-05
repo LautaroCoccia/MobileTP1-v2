@@ -226,75 +226,26 @@ public class Visualizacion : MonoBehaviour
 	{
 		if(Pj.ContrDesc.PEnMov != null)
 		{
-			//el fondo
-			GUI.skin = GS_FondoFondoBonusColor;
-			
-			R.width = ColorFondoFondoEsc.x *Screen.width /100;
-			R.height = ColorFondoFondoEsc.y *Screen.height /100;
-			R.x = ColorFondoFondoPos.x *Screen.width /100;
-			R.y = ColorFondoFondoPos.y *Screen.height /100;
-			if(LadoAct == Visualizacion.Lado.Der)
-				R.x += (Screen.width)/2;			
-			GUI.Box(R, "");
 			
 			
-			//el fondo
-			GUI.skin = GS_FondoBonusColor;
 			
-			R.width = ColorFondoEsc.x *Screen.width /100;
-			R.height = (ColorFondoEsc.y *Screen.height /100) * (Pj.ContrDesc.Bonus / (int)Pallet.Valores.Valor2);
-			R.x = ColorFondoPos.x *Screen.width /100;
-			R.y = (ColorFondoPos.y *Screen.height /100) - R.height;
-			if(LadoAct == Visualizacion.Lado.Der)
-				R.x += (Screen.width)/2;			
-			GUI.Box(R, "");
-			
-			
-			//la bolsa
-			GUI.skin = GS_Bonus;
-		
-			R.width = BonusEsc.x *Screen.width /100;
-			R.height = R.width /2;
-			R.x = BonusPos.x *Screen.width /100;
-			R.y = BonusPos.y *Screen.height /100;
-			if(LadoAct == Visualizacion.Lado.Der)
-				R.x += (Screen.width)/2;
-			GUI.Box(R, "     $" + Pj.ContrDesc.Bonus.ToString("0"));
 		}
 	}
 	
 	void SetDinero()
 	{
-		//GUI.skin = GS_Din;
 		
-		R.width = DinEsc.x *Screen.width /100;
-		R.height = DinEsc.y *Screen.height /100;
-		R.x = DinPos[0].x *Screen.width /100;
-		R.y = DinPos[0].y *Screen.height /100;
-		if(LadoAct == Visualizacion.Lado.Der)
-			R.x = DinPos[1].x *Screen.width /100;
-			//R.x = (Screen.width) - (Screen.width/2) - R.x;
-		GUI.Box(R, "$" + PrepararNumeros(Pj.Dinero));
 	}
 	
 	void SetCalibr()
 	{
-		GUI.skin = GS_TutoCalib;
-		
-		R.width = ReadyEsc.x *Screen.width /100;
-		R.height = ReadyEsc.y *Screen.height /100;
-		R.x = ReadyPos.x *Screen.width /100;
-		R.y = ReadyPos.y *Screen.height /100;
-		if(LadoAct == Visualizacion.Lado.Der)
-			R.x = (Screen.width) - R.x - R.width;
 		
 		switch(Pj.ContrCalib.EstAct)
 		{
 		case ContrCalibracion.Estados.Calibrando:
 			
 			//pongase en posicion para iniciar
-			GS_TutoCalib.box.normal.background = ImaEnPosicion;			
-			GUI.Box(R,"");
+			
 			
 			break;
 			
