@@ -4,8 +4,9 @@ using UnityEngine.EventSystems;
 public class ControlDireccion : MonoBehaviour 
 {
 	public enum TipoInput { Mouse, Kinect, AWSD, Arrows, VirtualJoystic }
-	public TipoInput InputAct = ControlDireccion.TipoInput.Mouse;
+	private TipoInput InputAct = ControlDireccion.TipoInput.Mouse;
 
+	public Player player;
 	public Transform ManoDer;
 	public Transform ManoIzq;
 
@@ -30,8 +31,27 @@ public class ControlDireccion : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-
+#if UNITY_EDITOR
+		if( player.IdPlayer== 0 )
+        {
+			InputAct = TipoInput.AWSD;
+		}
+		if (player.IdPlayer==1)
+        {
+			InputAct = TipoInput.Arrows;
+        }
+#elif UNITY_ANDROID
+		if(player.IdPlayer== 0 )
+		{
+			InputAct = TipoInput.VirtualJoystic;
+		}
+		if(player.IdPlayer== 1)
+		{
+			InputAct = TipoInput.VirtualJoystic;
+		}
+#endif
 	}
+
 
 	// Update is called once per frame
 	void Update()
@@ -44,20 +64,6 @@ public class ControlDireccion : MonoBehaviour
 				break;
 
 			case TipoInput.Kinect:
-
-				//print("Angulo: "+Angulo());
-				/*
-				if(ManoIzq.position.y > ManoDer.position.y)
-				{
-					DirAct = Sentido.Der;
-					Diferencia = ManoIzq.position.y - ManoDer.position.y;
-				}
-				else
-				{
-					DirAct = Sentido.Izq;
-					Diferencia = ManoDer.position.y - ManoIzq.position.y;
-				}
-				*/
 
 				if (ManoIzq.position.y > ManoDer.position.y)
 				{
@@ -130,24 +136,7 @@ public class ControlDireccion : MonoBehaviour
 
 	public float GetGiro()
 	{
-		/*
-		switch(DirAct)
-			{
-			case Sentido.Der:
-				if(Angulo() <= MaxAng)
-					return Angulo() / MaxAng;
-				else
-					return 1;
-				break;
-				
-			case Sentido.Izq:
-				if(Angulo() <= MaxAng)
-					return (Angulo() / MaxAng) * (-1);
-				else
-					return (-1);
-				break;
-			}
-		*/
+		
 
 		return Giro;
 	}

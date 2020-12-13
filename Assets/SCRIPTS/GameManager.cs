@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public enum Obstaculos { desactivados, activados }
 
-    public Obstaculos OBS = Obstaculos.desactivados;
+    public Obstaculos OBS;
 
     public static GameManager _instanceGameManager;
     private void Awake()
@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator Scene(string name)
     {
-        
         SceneManager.LoadSceneAsync(name);
         yield return new WaitForSecondsRealtime(1f);
     }

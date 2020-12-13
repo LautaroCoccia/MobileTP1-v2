@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PalletMover : ManejoPallets {
 
-    public MoveType miInput;
+    public Player player;
+    private MoveType miInput;
     public enum MoveType {
         WASD,
         Arrows,
@@ -20,7 +21,29 @@ public class PalletMover : ManejoPallets {
 
     public ManejoPallets Desde, Hasta;
     bool segundoCompleto = false;
+    private void Start()
+    {
+#if UNITY_EDITOR
 
+        if( player.IdPlayer == 0)
+        {
+            miInput = MoveType.WASD;
+        }
+        if(player.IdPlayer == 1)
+        {
+            miInput = MoveType.Arrows;
+        }
+#elif UNITY_ANDROID
+        if( player.IdPlayer == 0)
+        {
+             miInput=MoveType.Joystick;
+        }
+        if(player.IdPlayer == 1)
+        {
+            miInput=MoveType.Joystick;
+        }
+#endif
+    }
     private void Update() {
         switch (miInput) {
             case MoveType.WASD:
@@ -49,7 +72,6 @@ public class PalletMover : ManejoPallets {
                 if (!Tenencia() && Desde.Tenencia() && agarrar)
                 {
                     PrimerPaso();
-                    Debug.Log("Primer Paso");
                     agarrar = false;
                 }
                 if (Tenencia() && levantar)

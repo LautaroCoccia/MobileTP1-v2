@@ -3,16 +3,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+public enum Mode { single, multi }
 public class LevelManager : MonoBehaviour
 {
-
 	public static LevelManager Instancia;
 
 	public float TiempoDeJuego = 60;
-
 	public enum EstadoJuego { Calibrando, Jugando, Finalizado }
 	public EstadoJuego EstAct = EstadoJuego.Calibrando;
 	
+	public Mode gameMode;
+
 	public GameObject obstaculos;
 	public PlayerInfo PlayerInfo1 = null;
 	public PlayerInfo PlayerInfo2 = null;
@@ -58,8 +59,7 @@ public class LevelManager : MonoBehaviour
 
 	IList<int> users;
 
-	public enum Mode { single, multi }
-	public Mode gameMode;
+	
 	//--------------------------------------------------------//
 
 	void Awake()
@@ -110,16 +110,17 @@ public class LevelManager : MonoBehaviour
 					}
 				}
 
-				switch(gameMode)
+				switch (gameMode)
                 {
-					case Mode.single:
-						FinCalibracion(1);
-						FinTutorial(1);
-						break;
-					case Mode.multi:
+                    case Mode.single:
+                        FinCalibracion(1);
+                        FinTutorial(1);
+                        break;
+                    case Mode.multi:
 
-						break;
+                        break;
                 }
+
 
 				if (PlayerInfo1.PJ == null )
 				{
@@ -303,7 +304,7 @@ public class LevelManager : MonoBehaviour
 
 	void FinalizarCarrera()
 	{
-		EstAct = LevelManager.EstadoJuego.Finalizado;
+		EstAct = EstadoJuego.Finalizado;
 
 		TiempoDeJuego = 0;
 
@@ -447,7 +448,7 @@ public class LevelManager : MonoBehaviour
 		Player1.transform.forward = Vector3.forward;
 		Player2.transform.forward = Vector3.forward;
 
-		EstAct = LevelManager.EstadoJuego.Jugando;
+		EstAct = EstadoJuego.Jugando;
 	}
 
 	public void FinTutorial(int playerID)

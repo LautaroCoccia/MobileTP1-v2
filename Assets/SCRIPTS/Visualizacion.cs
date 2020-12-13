@@ -8,14 +8,17 @@ using TMPro;
 /// </summary>
 public class Visualizacion : MonoBehaviour 
 {
+
+	public GameObject joy;
+	public GameObject buttons;
+	public GameObject points;
 	public enum Lado{Izq, Der}
 	public Lado LadoAct;
 	
 	ControlDireccion Direccion;
-	Player Pj;
-	
-	public enum Mode{single, multi }
-	public Mode gameMode;
+	public Player Pj;
+
+	public LevelManager lvlMg;
 
 	//las distintas camaras
 	public Camera CamCalibracion;
@@ -97,6 +100,57 @@ public class Visualizacion : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+#if UNITY_EDITOR || UNITY_STANDALONE
+		joy.SetActive(false);
+		buttons.SetActive(false);
+
+		switch (lvlMg.gameMode)
+		{
+			case Mode.single:
+				if (Pj.IdPlayer == 0)
+				{
+					points.SetActive(true);
+				}
+				if (Pj.IdPlayer == 1)
+				{
+					points.SetActive(false);
+				}
+				break;
+			case Mode.multi:
+				if (Pj.IdPlayer == 0 || Pj.IdPlayer == 1)
+				{
+					points.SetActive(true);
+				}
+				break;
+		}
+#elif UNITY_ANDROID
+	switch (lvlMg.gameMode)
+		{
+			case Mode.single:
+				if (Pj.IdPlayer == 0)
+                {
+					joy.SetActive(true);
+					buttons.SetActive(true);
+					points.SetActive(true);
+				}
+				if (Pj.IdPlayer == 1)
+                {
+					joy.SetActive(false);
+					buttons.SetActive(false);
+					points.SetActive(false);
+				}
+				break;
+			case Mode.multi:
+				if (Pj.IdPlayer == 0 || Pj.IdPlayer == 1)
+				{
+					joy.SetActive(true);
+					buttons.SetActive(true);
+					points.SetActive(true);
+				}
+				break;
+		}
+#endif
+
 		TempoIntTuto = Intervalo;
 		Direccion = GetComponent<ControlDireccion>();
 		Pj = GetComponent<Player>();
@@ -149,13 +203,18 @@ public class Visualizacion : MonoBehaviour
 	
 	public void CambiarACalibracion()
 	{
-		switch (gameMode)
+		switch (lvlMg.gameMode)
 		{
+
 			case Mode.single:
-				CamCalibracion.enabled = false;
+				if (Pj.IdPlayer == 0)
+					CamCalibracion.enabled = true;
+				if (Pj.IdPlayer == 1)
+					CamCalibracion.enabled = false;
 				break;
 			case Mode.multi:
-				CamCalibracion.enabled = true;
+				if(Pj.IdPlayer == 0 || Pj.IdPlayer ==1)
+					CamCalibracion.enabled = true;
 				break;
 		}
 		CamConduccion.enabled = false;
@@ -293,61 +352,10 @@ public class Visualizacion : MonoBehaviour
 		}
 	}
 	
-	/*
-	void SetInv()
-	{
-		GUI.skin = GS_Inv;
-		
-		//fondo
-		GS_Inv.box.normal.background = TextFondo;
-		R.width = FondoEsc.x * Screen.width /100;
-		R.height = FondoEsc.y * Screen.height /100;
-		R.x = FondoPos.x * Screen.width /100;
-		R.y = FondoPos.y * Screen.height /100;
-		if(LadoAct == Visualizacion.Lado.Der)
-			R.x = (Screen.width) - R.x - R.width;
-		GUI.Box(R,"");
-		
-		//bolsas
-		R.width = SlotsEsc.x * Screen.width /100;
-		R.height = SlotsEsc.y * Screen.height /100;
-		int contador = 0;
-		for(int j = 0; j < Fil; j++)
-		{
-			for(int i = 0; i < Col; i++)
-			{
-				R.x = SlotPrimPos.x * Screen.width / 100 + Separacion.x * i * Screen.width / 100;
-				R.y = SlotPrimPos.y * Screen.height / 100 + Separacion.y * j * Screen.height / 100;
-				if(LadoAct == Visualizacion.Lado.Der)
-					R.x = (Screen.width) - R.x - R.width;
-				
-				if(contador < Pj.Bolasas.Length )//&& Pj.Bolasas[contador] != null)
-				{
-					if(Pj.Bolasas[contador]!=null)
-						GS_Inv.box.normal.background = Pj.Bolasas[contador].ImagenInventario;
-					else
-						GS_Inv.box.normal.background = TexturaVacia;				
-				}
-				else
-				{
-					GS_Inv.box.normal.background = TexturaVacia;
-				}
-				GUI.Box(R,"");
-				
-				contador++;
-			}
-		}
-	}
-	*/
-	
-	
-	
 	
 	
 	void SetInv3()
-	{
-
-		
+	{		
 		R.width = FondoEsc.x * Screen.width /100;
 		R.height = FondoEsc.y * Screen.width /100;
 		R.x = FondoPos[0].x * Screen.width /100;
@@ -511,7 +519,4 @@ public class Visualizacion : MonoBehaviour
 		
 		return res;
 	}
-	
-	
-	
 }
