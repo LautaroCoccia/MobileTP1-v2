@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public enum Obstaculos { desactivados, activados }
 
-    public Obstaculos OBS;
+    public static Obstaculos OBS;
 
     public static GameManager _instanceGameManager;
     private void Awake()

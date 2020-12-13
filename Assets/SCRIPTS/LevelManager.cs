@@ -378,7 +378,7 @@ public class LevelManager : MonoBehaviour
 		for (int i = 0; i < ObjsCarrera.Length; i++)
 		{
 			ObjsCarrera[i].SetActiveRecursively(true);
-			if (GameManager._instanceGameManager != null && GameManager._instanceGameManager.OBS == GameManager.Obstaculos.activados)
+			if (GameManager._instanceGameManager != null && GameManager.OBS == GameManager.Obstaculos.activados)
 			{
 				ObjsCarrera[0].SetActiveRecursively(true);
 
